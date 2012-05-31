@@ -2,46 +2,52 @@
 #include <pluginlib/class_list_macros.h>
 #include <boost/thread.hpp>
 
-namespace my_controller_ns {
+namespace ik_joint_controller_ns {
 
 
-	void MyControllerClass::getParams(ros::NodeHandle& n) {
+	void IkJointControllerClass::getParams(ros::NodeHandle& n) {
+		ROS_INFO("getting params for ik_joint_controller");
+    	n.getParam("gains/p0", p_[0]);
+    	n.getParam("gains/p1", p_[1]);
+    	n.getParam("gains/p2", p_[2]);
+    	n.getParam("gains/p3", p_[3]);
+    	n.getParam("gains/p4", p_[4]);
+    	n.getParam("gains/p5", p_[5]);
+    	n.getParam("gains/p6", p_[6]);
 
-    	n.getParam("/my_controller_name/gains/p0", p_[0]);
-    	n.getParam("/my_controller_name/gains/p1", p_[1]);
-    	n.getParam("/my_controller_name/gains/p2", p_[2]);
-    	n.getParam("/my_controller_name/gains/p3", p_[3]);
-    	n.getParam("/my_controller_name/gains/p4", p_[4]);
-    	n.getParam("/my_controller_name/gains/p5", p_[5]);
-    	n.getParam("/my_controller_name/gains/p6", p_[6]);
+    	n.getParam("gains/d0", d_[0]);
+    	n.getParam("gains/d1", d_[1]);
+    	n.getParam("gains/d2", d_[2]);
+    	n.getParam("gains/d3", d_[3]);
+    	n.getParam("gains/d4", d_[4]);
+    	n.getParam("gains/d5", d_[5]);
+    	n.getParam("gains/d6", d_[6]);
 
-    	n.getParam("/my_controller_name/gains/d0", d_[0]);
-    	n.getParam("/my_controller_name/gains/d1", d_[1]);
-    	n.getParam("/my_controller_name/gains/d2", d_[2]);
-    	n.getParam("/my_controller_name/gains/d3", d_[3]);
-    	n.getParam("/my_controller_name/gains/d4", d_[4]);
-    	n.getParam("/my_controller_name/gains/d5", d_[5]);
-    	n.getParam("/my_controller_name/gains/d6", d_[6]);
+    	for (int i = 0 ; i < 7; i++){
+			ROS_INFO("got gains parameter p %d:%f",i , p_[i]);
+			ROS_INFO("got gains parameter d %d:%f",i , d_[i]);
+    	}
+    }
 
-	}
-
-	void MyControllerClass::getParamsLoop(ros::NodeHandle& n) {
+	void IkJointControllerClass::getParamsLoop(ros::NodeHandle& n) {
 		while (ros::ok()) {
 			getParams(n);
 		}
 	}
-	void MyControllerClass::spinFunc() {
+
+
+	void IkJointControllerClass::spinFunc() {
 		ros::spin();
 	}
 
     /// Controller initialization in non-realtime
-    bool MyControllerClass::init(pr2_mechanism_model::RobotState *robot,
+    bool IkJointControllerClass::init(pr2_mechanism_model::RobotState *robot,
             ros::NodeHandle &n)
     {
-    	ROS_INFO("initializing joint controller");
+    	ROS_INFO("initializing ik_joint_controller");
 
     	getParams(n);
-    	boost::thread(&MyControllerClass::getParamsLoop, this, n);
+    	//boost::thread(&IkJointControllerClass::getParamsLoop, this, n);
 
         char* r_joint_names[] = {"r_shoulder_pan_joint",
                                 "r_shoulder_lift_joint",
@@ -59,7 +65,7 @@ namespace my_controller_ns {
                                 "l_wrist_flex_joint",
                                 "l_wrist_roll_joint"};
 
-        sub_ = n.subscribe("joint_command", 100, &MyControllerClass::jointCommandCallback, this);
+        sub_ = n.subscribe("joint_command", 100, &IkJointControllerClass::jointCommandCallback, this);
 
 
         for (int i=0; i < 7; ++i)  {
@@ -80,8 +86,8 @@ namespace my_controller_ns {
         return true;
     }
 
-    void MyControllerClass::jointCommandCallback(const my_controller_pkg::JointCommand& msg){
-    	ROS_INFO("got some joints");
+    void IkJointControllerClass::jointCommandCallback(const my_controller_pkg::JointCommand& msg){
+    	ROS_INFO("ik_joint_controller got JointCommand");
         for (int i=0; i < 7; ++i) {
             l_target_[i] = msg.joints[i];
             r_target_[i] = msg.joints[i+7];
@@ -90,10 +96,12 @@ namespace my_controller_ns {
 
 
     /// Controller startup in realtime
-    void MyControllerClass::starting()
+    void IkJointControllerClass::starting()
     {
-    	ROS_INFO("starting joint controller");
-    	boost::thread(&MyControllerClass::spinFunc, this);
+    	ROS_INFO("starting ik_joint_controller");
+
+
+    	//boost::thread(&IkJointControllerClass::spinFunc, this);
 
       for (int i=0; i < 7; ++i) {
     	  l_target_[i] = l_joint_states_[i]->position_;
@@ -105,7 +113,7 @@ namespace my_controller_ns {
 
 
     /// Controller update loop in realtime
-    void MyControllerClass::update()
+    void IkJointControllerClass::update()
     {
         for (int i = 0; i < 7; i++) {
           double err;
@@ -126,7 +134,7 @@ namespace my_controller_ns {
 
 
     /// Controller stopping in realtime
-    void MyControllerClass::stopping()
+    void IkJointControllerClass::stopping()
     {}
 
 
@@ -134,6 +142,6 @@ namespace my_controller_ns {
 } // namespace
 
 /// Register controller to pluginlib
-PLUGINLIB_REGISTER_CLASS(MyControllerPlugin1,
-        my_controller_ns::MyControllerClass,
+PLUGINLIB_REGISTER_CLASS(IkJointControllerPlugin,
+        ik_joint_controller_ns::IkJointControllerClass,
         pr2_controller_interface::Controller)

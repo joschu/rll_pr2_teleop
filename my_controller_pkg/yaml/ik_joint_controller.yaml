@@ -1,5 +1,5 @@
 ik_joint_controller:
-    type: MyControllerPlugin1
+    type: IkJointControllerPlugin
     root_name: torso_lift_link
     tip_name: r_gripper_tool_frame
     gains:

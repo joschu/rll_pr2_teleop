@@ -14,7 +14,7 @@
 #include <sixense/Calib.h>
 #include <my_controller_pkg/MoveWithPaddle.h>
 
-namespace my_controller_ns{
+namespace ik_joint_controller_ns{
 
     class MyCartControllerClass: public pr2_controller_interface::Controller
     {

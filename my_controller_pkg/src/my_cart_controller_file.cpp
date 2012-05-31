@@ -1,7 +1,7 @@
 #include "my_controller_pkg/my_cart_controller_file.h"
 #include <pluginlib/class_list_macros.h>
 
-using namespace my_controller_ns;
+using namespace ik_joint_controller_ns;
 
 
 /// Controller initialization in non-realtime                                                                                                                                     
@@ -230,5 +230,5 @@ bool MyCartControllerClass::moveWithPaddle(my_controller_pkg::MoveWithPaddle::Re
 
 /// Register controller to pluginlib                                                 
 PLUGINLIB_REGISTER_CLASS(MyCartControllerPlugin,
-        my_controller_ns::MyCartControllerClass,
+        ik_joint_controller_ns::MyCartControllerClass,
         pr2_controller_interface::Controller)

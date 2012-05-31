@@ -3,9 +3,9 @@
 #include <ros/ros.h>
 #include <my_controller_pkg/JointCommand.h>
 
-namespace my_controller_ns{
+namespace ik_joint_controller_ns{
 
-    class MyControllerClass: public pr2_controller_interface::Controller
+    class IkJointControllerClass: public pr2_controller_interface::Controller
     {
         private:
 
