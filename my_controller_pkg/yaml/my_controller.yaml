@@ -1,0 +1,21 @@
+my_controller_name:
+    type: MyControllerPlugin1
+    root_name: torso_lift_link
+    tip_name: r_gripper_tool_frame
+    gains:
+        p0: 2400.
+        p1: 1200.
+        p2: 1000.
+        p3: 700.
+        p4: 300.
+        p5: 300.
+        p6: 300.
+        d0: 150.
+        d1: 100.
+        d2: 60.
+        d3: 40.
+        d4: 60.
+        d5: 40.
+        d6: 40.
+
+

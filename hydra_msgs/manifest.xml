@@ -1,0 +1,17 @@
+<package>
+  <description brief="hydra_msgs">
+
+     hydra_msgs
+
+  </description>
+  <author>John Schulman</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hydra_msgs</url>
+
+  <depend package="geometry_msgs"/>
+  <depend package="std_msgs"/>
+
+</package>
+
+

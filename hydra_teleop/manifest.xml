@@ -1,0 +1,16 @@
+<package>
+  <description brief="hydra_teleop">
+
+     hydra_teleop
+
+  </description>
+  <author>John Schulman</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hydra_teleop</url>
+  <depend package="roscpp"/>
+  <depend package="sixense"/>
+  <depend package="visualization_msgs"/>
+</package>
+
+

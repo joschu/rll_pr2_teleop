@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/161/trunk/hydra/msg
+END
+Calib.msg
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/161/trunk/hydra/msg/Calib.msg
+END
+CalibPaddle.msg
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/161/trunk/hydra/msg/CalibPaddle.msg
+END
+Raw.msg
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/161/trunk/hydra/msg/Raw.msg
+END

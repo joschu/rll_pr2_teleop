@@ -1,0 +1,4 @@
+my_cart_controller_name:
+  type: MyCartControllerPlugin
+  root_name: torso_lift_link
+  tip_name: r_gripper_tool_frame

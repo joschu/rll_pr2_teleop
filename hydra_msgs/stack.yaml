@@ -1,0 +1,6 @@
+Catkin-ProjectName: hydra_msgs
+Version: 0.3.0
+
+Depends: catkin, genmsg, std_msgs, geometry_msgs
+
+Catkin-DebRulesType: cmake
