@@ -38,12 +38,12 @@ namespace my_controller_ns {
     bool MyControllerClass::init(pr2_mechanism_model::RobotState *robot,
             ros::NodeHandle &n)
     {
-    	ROS_INFO("init");
+    	ROS_INFO("initializing joint controller");
 
     	getParams(n);
     	boost::thread(&MyControllerClass::getParamsLoop, this, n);
 
-        char* joint_names[] = {"r_shoulder_pan_joint",
+        char* r_joint_names[] = {"r_shoulder_pan_joint",
                                 "r_shoulder_lift_joint",
                                 "r_upper_arm_roll_joint",
                                 "r_elbow_flex_joint",
@@ -51,14 +51,30 @@ namespace my_controller_ns {
                                 "r_wrist_flex_joint",
                                 "r_wrist_roll_joint"};
 
-        sub_ = n.subscribe("joint_command", 100, &MyControllerClass::jointCommandCallback, this);
-        for (int i=0; i < 7; ++i)  {
-            joint_states_[i] = robot->getJointState(joint_names[i]);
-            if (joint_states_[i] == NULL) {
-                ROS_ERROR("couldn't find joint named %s", joint_names[i]);
-            }
-            target_[i] = joint_states_[i]->position_;
+        char* l_joint_names[] = {"l_shoulder_pan_joint",
+                                "l_shoulder_lift_joint",
+                                "l_upper_arm_roll_joint",
+                                "l_elbow_flex_joint",
+                                "l_forearm_roll_joint",
+                                "l_wrist_flex_joint",
+                                "l_wrist_roll_joint"};
 
+        sub_ = n.subscribe("joint_command", 100, &MyControllerClass::jointCommandCallback, this);
+
+
+        for (int i=0; i < 7; ++i)  {
+        	l_joint_states_[i] = robot->getJointState(l_joint_names[i]);
+            r_joint_states_[i] = robot->getJointState(r_joint_names[i]);
+
+            if (l_joint_states_[i] == NULL) {
+                ROS_ERROR("couldn't find joint named %s", l_joint_names[i]);
+            }
+            if (r_joint_states_[i] == NULL) {
+                ROS_ERROR("couldn't find joint named %s", r_joint_names[i]);
+            }
+
+            l_target_[i] = l_joint_states_[i]->position_;
+            r_target_[i] = r_joint_states_[i]->position_;
 
         }
         return true;
@@ -67,21 +83,23 @@ namespace my_controller_ns {
     void MyControllerClass::jointCommandCallback(const my_controller_pkg::JointCommand& msg){
     	ROS_INFO("got some joints");
         for (int i=0; i < 7; ++i) {
-            target_[i] = msg.joints[i];
+            l_target_[i] = msg.joints[i];
+            r_target_[i] = msg.joints[i+7];
         }
-
     }
 
 
     /// Controller startup in realtime
     void MyControllerClass::starting()
     {
-    	ROS_INFO("starting");
+    	ROS_INFO("starting joint controller");
     	boost::thread(&MyControllerClass::spinFunc, this);
 
       for (int i=0; i < 7; ++i) {
-    	  target_[i] = joint_states_[i]->position_;
-    	  err_[i] = 0;
+    	  l_target_[i] = l_joint_states_[i]->position_;
+    	  r_target_[i] = r_joint_states_[i]->position_;
+    	  l_err_[i] = 0;
+    	  r_err_[i] = 0;
       }
     }
 
@@ -90,10 +108,19 @@ namespace my_controller_ns {
     void MyControllerClass::update()
     {
         for (int i = 0; i < 7; i++) {
-          double err = (target_[i] - joint_states_[i]->position_); // current error
-          double derr = 1000*(err_[i] - err);
-          joint_states_[i]->commanded_effort_ =  err * p_[i] - derr * d_[i];
-          err_[i] = err;
+          double err;
+          double d_err;
+
+          err = (l_target_[i] - l_joint_states_[i]->position_); // current error
+          d_err = 1000*(l_err_[i] - err);
+          l_joint_states_[i]->commanded_effort_ =  err * p_[i] - d_err * d_[i];
+          l_err_[i] = err;
+
+          err = (r_target_[i] - r_joint_states_[i]->position_); // current error
+          d_err = 1000*(r_err_[i] - err);
+          r_joint_states_[i]->commanded_effort_ =  err * p_[i] - d_err * d_[i];
+          r_err_[i] = err;
+
         }
     }
 

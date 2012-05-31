@@ -9,7 +9,9 @@ namespace my_controller_ns{
     {
         private:
 
-            pr2_mechanism_model::JointState* joint_states_[7]; //
+    		pr2_mechanism_model::JointState* l_joint_states_[7]; //
+            pr2_mechanism_model::JointState* r_joint_states_[7]; //
+
             double init_pos_;
             ros::ServiceServer srv_;
             ros::Subscriber sub_;
@@ -19,11 +21,14 @@ namespace my_controller_ns{
             void getParamsLoop(ros::NodeHandle&);//continuously get parameters so we dont have to reload controller
             void spinFunc();// for subcriber callback
 
-            double target_[7];  //target joint values
+            double l_target_[7];  //target joint values for left arm
+            double r_target_[7];  //target joint values for right arm
 
             double p_[7]; //proportional
             double d_[7]; //derivative
-            double err_[7]; //error in the last time step
+
+            double l_err_[7]; //error in the last time step for left arm
+            double r_err_[7]; //error in the last time step for right arm
 
             //current robot state to get time stamp
             pr2_mechanism_model::RobotState* robot_state_;
