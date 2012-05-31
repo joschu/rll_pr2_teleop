@@ -4,7 +4,10 @@
     <include file="$(find pr2_gazebo)/empty_world_paused.launch"/>
     
     <!-- Startup PR2 without any mechanism controllers -->
-    <include file="$(find pr2_gazebo)/pr2.launch" />
-    <node name="stop_r_arm" pkg="pr2_controller_manager" type="pr2_controller_manager" args="stop r_arm_controller l_arm_controller"/>
+    <include file="$(find pr2_gazebo)/pr2_no_controllers.launch" />
+     
+    <!-- launch default controllers except arms -->
+    <include file="$(find my_controller_pkg)/launch/pr2_controller_no_arms.launch" />
+
 </launch>
 
