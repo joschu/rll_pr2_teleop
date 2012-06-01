@@ -9,8 +9,8 @@ namespace ik_joint_controller_ns{
     {
         private:
 
-    		pr2_mechanism_model::JointState* l_joint_states_[7]; //
-            pr2_mechanism_model::JointState* r_joint_states_[7]; //
+    		std::string joint_names_[7]; //array of 7 joint names
+    		pr2_mechanism_model::JointState* joint_states_[7]; //handle on the 7 joint states
 
             double init_pos_;
             ros::ServiceServer srv_;
@@ -21,14 +21,12 @@ namespace ik_joint_controller_ns{
             void getParamsLoop(ros::NodeHandle&);//continuously get parameters so we dont have to reload controller
             void spinFunc();// for subcriber callback
 
-            double l_target_[7];  //target joint values for left arm
-            double r_target_[7];  //target joint values for right arm
+            double target_[7];  //target joint values
 
             double p_[7]; //proportional
             double d_[7]; //derivative
 
-            double l_err_[7]; //error in the last time step for left arm
-            double r_err_[7]; //error in the last time step for right arm
+            double err_[7]; //error in the last time step
 
             //current robot state to get time stamp
             pr2_mechanism_model::RobotState* robot_state_;
