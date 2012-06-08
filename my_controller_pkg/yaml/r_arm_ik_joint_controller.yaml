@@ -9,10 +9,10 @@ r_arm_ik_joint_controller:
     - r_wrist_flex_joint
     - r_wrist_roll_joint
   gains:
-    r_shoulder_pan_joint: {p: 24000, d: 150}
-    r_shoulder_lift_joint: {p: 1200.0, d: 100}
-    r_upper_arm_roll_joint: {p: 1000.0, d: 6.0}
-    r_elbow_flex_joint: {p: 700.0, d: 4.0}
-    r_forearm_roll_joint: {p: 300.0, d: 6.0}
-    r_wrist_flex_joint: {p: 300.0, d: 4.0}
-    r_wrist_roll_joint: {p: 300.0, d: 4.0}
+    r_shoulder_pan_joint: {p: 100, d: 30}
+    r_shoulder_lift_joint: {p: 60.0, d: 20}
+    r_upper_arm_roll_joint: {p: 50.0, d: 6.0}
+    r_elbow_flex_joint: {p: 20.0, d: 5.0}
+    r_forearm_roll_joint: {p: 10.0, d: 3.0}
+    r_wrist_flex_joint: {p: 10.0, d: 2.0}
+    r_wrist_roll_joint: {p: 10.0, d: 2.0}

@@ -1,5 +1,5 @@
 <library path="lib/libmy_controller_lib">
-    <class name="IkJointControllerPlugin" 
+    <class name="IkJointControllerPlugin1" 
         type="ik_joint_controller_ns::IkJointControllerClass"           
         base_class_type="pr2_controller_interface::Controller" />
     <class name="MyCartControllerPlugin" 
