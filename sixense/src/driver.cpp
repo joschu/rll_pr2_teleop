@@ -803,17 +803,10 @@ void publishROS(const sixenseAllControllerData& acd) {
 }
 
 // glut calls this function each frame
-static void display(void)
+static void display(int)
 {
 
-  static double tPrev(0);
-  double tNow = timeOfDay();
-  if (tNow - tPrev < .01) {
-    sleep(.001);
-    return;
-  }
-  tPrev = tNow;
-
+  glutTimerFunc(20, &display, 0);
   // update the controller manager with the latest controller data here
   sixenseSetActiveBase(0);
   sixenseAllControllerData acd;
@@ -888,6 +881,7 @@ key(unsigned char key, int x, int y)
   glutPostRedisplay();
 }
 
+
 static void
 idle(void)
 {
@@ -941,9 +935,9 @@ int main(int argc, char *argv[])
   glutCreateWindow("Sixense Test");
 
   glutReshapeFunc(resize);
-  glutDisplayFunc(display);
+//  glutDisplayFunc(display);
   glutKeyboardFunc(key);
-  glutIdleFunc(idle);
+//  glutIdleFunc(idle);
 
   glutSetOption ( GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION ) ;
 
@@ -976,6 +970,7 @@ int main(int argc, char *argv[])
   sixenseUtils::getTheControllerManager()->setGameType( sixenseUtils::ControllerManager::ONE_PLAYER_TWO_CONTROLLER );
   sixenseUtils::getTheControllerManager()->registerSetupCallback( controller_manager_setup_callback );
 
+  display(0);
   glutMainLoop();
 
   sixenseExit();
