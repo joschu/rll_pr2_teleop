@@ -30,8 +30,6 @@ rosbuild_gensrv()
 
 rosbuild_add_library(my_controller_lib src/joint_controller.cpp)
 
-
-
 #finding and using Eigen
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})

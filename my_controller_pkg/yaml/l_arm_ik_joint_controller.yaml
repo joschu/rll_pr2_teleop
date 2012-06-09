@@ -1,0 +1,18 @@
+l_arm_ik_joint_controller:
+  type: IkJointControllerPlugin1
+  joints:
+    - l_shoulder_pan_joint
+    - l_shoulder_lift_joint
+    - l_upper_arm_roll_joint
+    - l_elbow_flex_joint
+    - l_forearm_roll_joint
+    - l_wrist_flex_joint
+    - l_wrist_roll_joint
+  gains:
+    l_shoulder_pan_joint: {p: 100, d: 30}
+    l_shoulder_lift_joint: {p: 60.0, d: 100}
+    l_upper_arm_roll_joint: {p: 50.0, d: 6.0}
+    l_elbow_flex_joint: {p: 20.0, d: 5.0}
+    l_forearm_roll_joint: {p: 10.0, d: 3.0}
+    l_wrist_flex_joint: {p: 10.0, d: 2.0}
+    l_wrist_roll_joint: {p: 10.0, d: 2.0}

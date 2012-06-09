@@ -1,0 +1,4 @@
+<launch>
+	<include file="$(find my_controller_pkg)/launch/l_arm_ik_joint_controller.launch"/>
+	<include file="$(find my_controller_pkg)/launch/r_arm_ik_joint_controller.launch"/>
+</launch>

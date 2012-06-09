@@ -3,13 +3,15 @@
 #include <ros/ros.h>
 #include <my_controller_pkg/JointCommand.h>
 
-namespace my_controller_ns{
+namespace ik_joint_controller_ns{
 
-    class MyControllerClass: public pr2_controller_interface::Controller
+    class IkJointControllerClass: public pr2_controller_interface::Controller
     {
         private:
 
-            pr2_mechanism_model::JointState* joint_states_[7]; //
+    		std::string joint_names_[7]; //array of 7 joint names
+    		pr2_mechanism_model::JointState* joint_states_[7]; //handle on the 7 joint states
+
             double init_pos_;
             ros::ServiceServer srv_;
             ros::Subscriber sub_;
@@ -23,6 +25,7 @@ namespace my_controller_ns{
 
             double p_[7]; //proportional
             double d_[7]; //derivative
+
             double err_[7]; //error in the last time step
 
             //current robot state to get time stamp
