@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include "sixense/Calib.h"
+#include "hydra_msgs/Calib.h"
 #include "visualization_msgs/Marker.h"
 namespace vm = visualization_msgs;
 
@@ -14,9 +14,9 @@ struct HydraViz {
   {
   }
 
-  void callback(const sixense::Calib& msg) {
+  void callback(const hydra_msgs::Calib& msg) {
     for (int i=0; i < 2; i++) {
-      const sixense::CalibPaddle& paddle = msg.paddles[i];
+      const hydra_msgs::CalibPaddle& paddle = msg.paddles[i];
       vm::Marker marker;
       marker.action = vm::Marker::ADD;
       marker.id = i;

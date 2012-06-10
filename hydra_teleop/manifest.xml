@@ -10,6 +10,7 @@
   <url>http://ros.org/wiki/hydra_teleop</url>
   <depend package="roscpp"/>
   <depend package="sixense"/>
+  <depend package="hydra_msgs"/>
   <depend package="visualization_msgs"/>
 </package>
 
