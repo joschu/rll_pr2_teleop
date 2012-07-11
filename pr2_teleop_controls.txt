@@ -1,0 +1,14 @@
+
+Press LT and wave Left Paddle to move left gripper.
+Press RT and wave Right Paddle to move right gripper.
+orientation of gripper is absolute. 
+translation of gripper is relative to the location of trigger press.
+
+Pressing 1 on each paddle will close respective gripper
+Pressing 2 on each paddle will open respective gripper
+
+Right Joystick is used for base translation
+Left Joystick is used for base rotation (might be inverted)
+
+Hold center unmarked button on left paddle to change right joystick into head control.
+Y-axis for head control is normal (not inverted)
